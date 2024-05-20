@@ -1,0 +1,91 @@
+:root {
+    /* Call user attention */
+    --primary: #3d5467;
+    --primary-dark: #2d3f4d;
+    /* Highlight less important */
+    --secondary: #5A2A27;
+    --secondary-dark: #48211e;
+    /* Neutral for text, background & non-attention seeking */
+    --neutral: #A5907E;
+    --neutral-dark: #806e5f;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--neutral);
+}
+
+nav ul {
+    background-color: var(--primary);
+    padding: 0;
+    margin: 0;
+}
+
+.navLeft, .navRight {
+    width: auto;
+    display: inline-block;
+}
+
+.navRight {
+    float: right;
+}
+
+.navitem {
+    display: inline-block;
+    list-style: none;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    color: white;
+    transition: all ease-in 0.2s;
+    border-radius: 5px;
+}
+
+.navLeft .navitem li {
+    /* top left bottom right */
+    padding: 5px 15px 5px 15px;
+    border-right: 2px solid white;
+    font-weight:bold;
+}
+
+.navRight .navitem li {
+    /* top left bottom right */
+    padding: 5px 15px 5px 15px;
+    border-left: 2px solid white;
+    font-weight:bold;
+}
+
+a {
+    text-decoration: none;
+}
+
+.navitem:hover {
+    color: rgb(235, 235, 235);
+    background-color: var(--primary-dark);
+}
+
+main {
+    padding: 20px
+}
+
+.leftInfo {
+    width: 50%;
+    display: inline-block;
+}
+
+.rightInfo {
+    width: 50%;
+    float: right;
+}
+
+.rightInfo h2, .leftInfo h2 {
+    text-align: center;
+}
+
+.infoPanes {
+    width: 75%;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    margin: 0 auto 0 auto;
+    padding: 10px
+}
