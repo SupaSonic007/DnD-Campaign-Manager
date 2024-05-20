@@ -29,7 +29,7 @@ export default function Page() {
                     <input type="submit" value={"Submit"} />
                     <br />
                     <br />
-                    <span>Don't have an account? <a href='/register'>Register now!</a></span>
+                    <span>Don&apos;t have an account? <a href='/register'>Register now!</a></span>
                 </form>
             </div>
         </main>
