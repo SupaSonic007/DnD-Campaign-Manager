@@ -22,7 +22,8 @@ nav ul {
     margin: 0;
 }
 
-.navLeft, .navRight {
+.navLeft,
+.navRight {
     width: auto;
     display: inline-block;
 }
@@ -45,14 +46,14 @@ nav ul {
     /* top left bottom right */
     padding: 5px 15px 5px 15px;
     border-right: 2px solid white;
-    font-weight:bold;
+    font-weight: bold;
 }
 
 .navRight .navitem li {
     /* top left bottom right */
     padding: 5px 15px 5px 15px;
     border-left: 2px solid white;
-    font-weight:bold;
+    font-weight: bold;
 }
 
 a {
@@ -78,7 +79,8 @@ main {
     float: right;
 }
 
-.rightInfo h2, .leftInfo h2 {
+.rightInfo h2,
+.leftInfo h2 {
     text-align: center;
 }
 
