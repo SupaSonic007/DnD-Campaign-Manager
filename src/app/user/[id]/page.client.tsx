@@ -4,6 +4,6 @@ export default function ClientPage({user}: { user: {id: string, username: string
     
     return <ul>
         <li>{user.username}</li>
-        <li suppressHydrationWarning>{user.createdAt?.toLocaleString()}</li>
+        <li suppressHydrationWarning>{user.createdAt?.toUTCString()}</li>
     </ul>
 }
