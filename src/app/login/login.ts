@@ -5,7 +5,6 @@ import sha256 from "@/utils/sha256";
 import { and, eq } from "drizzle-orm";
 import { addUserTokenToCookie } from "@/utils/jwt";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 
 export async function auth(prevData: any, data: FormData) {
 
@@ -35,7 +34,7 @@ export async function auth(prevData: any, data: FormData) {
 
     await addUserTokenToCookie( user )
 
-    await revalidatePath('/')
+    await revalidatePath('/login')
 
     return { message: "Great successs!" };
 }

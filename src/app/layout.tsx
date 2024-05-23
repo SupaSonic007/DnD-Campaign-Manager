@@ -4,6 +4,7 @@ import { getCurrentUser } from "@/utils/jwt";
 import "./globals.css";
 import db, { schema } from "@/drizzy/drizzy";
 import { eq } from "drizzle-orm";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,27 +36,27 @@ export default async function RootLayout({
                     {/* Navitems for left */}
                     <ul>
                         <div className="navLeft">
-                            <a href="/" className="navitem">
+                            <Link href="/" className="navitem">
                                 <li>Home</li>
-                            </a>
-                            <a href="/about" className="navitem">
+                            </Link>
+                            <Link href="/about" className="navitem">
                                 <li>About Us</li>
-                            </a>
-                            <a href="/test" className="navitem">
+                            </Link>
+                            <Link href="/test" className="navitem">
                                 <li>test</li>
-                            </a>
+                            </Link>
                         </div>
                         {/* Profile & Profile Specific Links */}
                         {/* If logged in, show profile page */}
                         <div className="navRight">
                             {loggedIn == true ? (
-                                <a href={`/user/${userID}`} className="navitem">
+                                <Link href={`/user/${userID}`} className="navitem">
                                     <li>{user?.username}</li>
-                                </a>
+                                </Link>
                             ) : (
-                                <a href="/login" className="navitem">
+                                <Link href="/login" className="navitem">
                                     <li>Login</li>
-                                </a>
+                                </Link>
                             )}
                         </div>
                     </ul>
