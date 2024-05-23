@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { getCurrentUser } from "@/utils/jwt";
 import "./globals.css";
+import db, { schema } from "@/drizzy/drizzy";
+import { eq } from "drizzle-orm";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,11 +14,20 @@ export const metadata: Metadata = {
 
 let loggedIn = false;
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const userID = await getCurrentUser();
+    let user;
+    if (userID) {
+        user = (await db
+            .select()
+            .from(schema.user)
+            .where(eq(schema.user.id, userID)))[0];
+        loggedIn = true;
+    }
     return (
         <html lang="en">
             <body className={inter.className}>
@@ -37,8 +49,8 @@ export default function RootLayout({
                         {/* If logged in, show profile page */}
                         <div className="navRight">
                             {loggedIn == true ? (
-                                <a href="#" className="navitem">
-                                    <li>Profile</li>
+                                <a href={`/user/${userID}`} className="navitem">
+                                    <li>{user?.username}</li>
                                 </a>
                             ) : (
                                 <a href="/login" className="navitem">

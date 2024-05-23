@@ -3,12 +3,7 @@
 import db, { schema } from "@/drizzy/drizzy";
 import sha256 from "@/utils/sha256";
 import { eq, or } from "drizzle-orm";
-import {
-    createUserToken,
-    addUserTokenToCookie,
-    getCurrentUser,
-    getUserByToken,
-} from "@/utils/jwt";
+import { addUserTokenToCookie } from "@/utils/jwt";
 
 export async function register(prevData: any, data: FormData) {
     const email = data.get("email") as string;
@@ -38,9 +33,11 @@ export async function register(prevData: any, data: FormData) {
         .insert(schema.user)
         .values({ email: email, username: username, password: hashedPassword });
 
-    const user = await db
+    const user = (await db
         .select()
         .from(schema.user)
-        .where(eq(schema.user.email, email));
+        .where(eq(schema.user.email, email)))[0];
     console.log(user);
+
+    await addUserTokenToCookie( user );
 }

@@ -1,5 +1,3 @@
-"use server";
-
 // https://github.com/RiskyMH/Forms/blob/main/app/utils/jwt.ts
 
 import { SignJWT, jwtVerify } from "jose";

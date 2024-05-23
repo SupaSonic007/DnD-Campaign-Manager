@@ -3,6 +3,7 @@
 import db, { schema } from "@/drizzy/drizzy";
 import sha256 from "@/utils/sha256";
 import { and, eq } from "drizzle-orm";
+import { addUserTokenToCookie, createUserToken } from "@/utils/jwt";
 
 export async function auth(prevData: any, data: FormData) {
     const email = data.get("email") as string;
@@ -18,17 +19,18 @@ export async function auth(prevData: any, data: FormData) {
             )
         );
 
-    if (users.length == 0) {
+    const user = users[0];
+
+    if (!user) {
         return {
             message: "No user found with that username and password",
+            token: null,
         };
     }
 
-    const user = await db
-        .select()
-        .from(schema.user)
-        .where(eq(schema.user.email, email));
     console.log(user);
+
+    await addUserTokenToCookie( user )
 
     return { message: "Great successs!" };
 }
