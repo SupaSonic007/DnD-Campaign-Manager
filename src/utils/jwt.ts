@@ -21,18 +21,19 @@ export function createUserToken(user: { id: string }) {
         .setProtectedHeader({ alg: "HS256" })
         .setIssuedAt()
         .setNotBefore("-1min")
-        .setExpirationTime(process.env.JWT_EXPIRES_IN as string)
+        .setExpirationTime("90d")
         .setSubject(user.id.toString())
-        .sign(secret) as unknown as string;
+        .sign(secret);
 }
 
 export async function addUserTokenToCookie(user: { id: string }) {
-    const token = createUserToken(user);
-    cookies().set(token, token, {
+    const token = await createUserToken(user);
+    cookies().set("token", token, {
         expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         path: "/",
     });
 }
+
 export async function getCurrentUser() {
     const token = cookies().get("token");
     if (!token) return null;

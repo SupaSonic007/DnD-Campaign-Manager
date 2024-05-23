@@ -3,9 +3,12 @@
 import db, { schema } from "@/drizzy/drizzy";
 import sha256 from "@/utils/sha256";
 import { and, eq } from "drizzle-orm";
-import { addUserTokenToCookie, createUserToken } from "@/utils/jwt";
+import { addUserTokenToCookie } from "@/utils/jwt";
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 
 export async function auth(prevData: any, data: FormData) {
+
     const email = data.get("email") as string;
     const password = data.get("password") as string;
 
@@ -31,6 +34,8 @@ export async function auth(prevData: any, data: FormData) {
     console.log(user);
 
     await addUserTokenToCookie( user )
+
+    await revalidatePath('/')
 
     return { message: "Great successs!" };
 }
