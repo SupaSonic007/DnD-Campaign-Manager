@@ -19,7 +19,6 @@ export default async function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    let loggedIn = false;
     const userID = await getCurrentUser();
     let user;
     if (userID) {
@@ -27,7 +26,6 @@ export default async function RootLayout({
             .select()
             .from(schema.user)
             .where(eq(schema.user.id, userID)))[0];
-        loggedIn = true;
     }
     return (
         <html lang="en">
@@ -49,7 +47,7 @@ export default async function RootLayout({
                         {/* Profile & Profile Specific Links */}
                         {/* If logged in, show profile page */}
                         <div className="navRight">
-                            {loggedIn == true ? (
+                            {user? (
                                 <Link href={`/user/${userID}`} className="navitem">
                                     <li>{user?.username}</li>
                                 </Link>
