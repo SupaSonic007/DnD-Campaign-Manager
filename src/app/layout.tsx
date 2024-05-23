@@ -13,13 +13,13 @@ export const metadata: Metadata = {
     description: "D&D Campaign Manager Online",
 };
 
-let loggedIn = false;
 
 export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    let loggedIn = false;
     const userID = await getCurrentUser();
     let user;
     if (userID) {
