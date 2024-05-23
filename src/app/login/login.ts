@@ -4,7 +4,7 @@ import db, { schema } from "@/drizzy/drizzy";
 import sha256 from "@/utils/sha256";
 import { and, eq } from "drizzle-orm";
 import { addUserTokenToCookie } from "@/utils/jwt";
-import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function auth(prevData: any, data: FormData) {
 
@@ -26,7 +26,6 @@ export async function auth(prevData: any, data: FormData) {
     if (!user) {
         return {
             message: "No user found with that username and password",
-            token: null,
         };
     }
 
@@ -34,7 +33,6 @@ export async function auth(prevData: any, data: FormData) {
 
     await addUserTokenToCookie( user )
 
-    await revalidatePath('/login')
+    redirect('/')
 
-    return { message: "Great successs!" };
 }

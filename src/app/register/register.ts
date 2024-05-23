@@ -4,6 +4,7 @@ import db, { schema } from "@/drizzy/drizzy";
 import sha256 from "@/utils/sha256";
 import { eq, or } from "drizzle-orm";
 import { addUserTokenToCookie } from "@/utils/jwt";
+import { redirect } from "next/navigation";
 
 export async function register(prevData: any, data: FormData) {
     const email = data.get("email") as string;
@@ -40,4 +41,6 @@ export async function register(prevData: any, data: FormData) {
     console.log(user);
 
     await addUserTokenToCookie( user );
+
+    redirect('/')
 }
