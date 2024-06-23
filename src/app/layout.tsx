@@ -40,9 +40,9 @@ export default async function RootLayout({
                             <Link href="/about" className="navitem">
                                 <li>About Us</li>
                             </Link>
-                            <Link href="/test" className="navitem">
+                            {/* <Link href="/test" className="navitem">
                                 <li>test</li>
-                            </Link>
+                            </Link> */}
                         </div>
                         {/* Profile & Profile Specific Links */}
                         {/* If logged in, show profile page */}
