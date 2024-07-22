@@ -2,7 +2,20 @@ import React from "react";
 import "./styles.css";
 
 export class CharacterStats {
-    xp = 0;
+    constructor(
+        xp: number = 0,
+        attributes: object = structuredClone(defaultAttributes),
+        fatigue: number = 0
+    ) {
+        // JSON PARSE/STRINGIFY to ensure not pointer
+        this.xp = xp;
+        this.fatigue = fatigue;
+        this.attributes = attributes;
+    }
+
+    fatigue: number;
+    xp: number;
+    attributes: object;
 
     level = () => {
         return this.xp < 3 ? 1 : Math.floor(this.xp / 3) + 1;
@@ -12,46 +25,38 @@ export class CharacterStats {
         return 40 + xp;
     };
 
-    attributes = [
-        {
-            name: "Physical",
-            attributes: [
-                new Attribute("Agility"),
-                new Attribute("Fortitude"),
-                new Attribute("Might"),
-            ],
-        },
-        {
-            name: "Mental",
-            attributes: [
-                new Attribute("Learning"),
-                new Attribute("Logic"),
-                new Attribute("Perception"),
-                new Attribute("Will"),
-            ],
-        },
-        {
-            name: "Social",
-            attributes: [
-                new Attribute("Deception"),
-                new Attribute("Persuasion"),
-                new Attribute("Presence"),
-            ],
-        },
-        {
-            name: "Extraodinary",
-            attributes: [
-                new Attribute("Alteration"),
-                new Attribute("Creation"),
-                new Attribute("Energy"),
-                new Attribute("Entropy"),
-                new Attribute("Influence"),
-                new Attribute("Movement"),
-                new Attribute("Prescience"),
-                new Attribute("Protection"),
-            ],
-        },
-    ];
+    // ! TO IMPLEMENT (USE CHAR SHEET)
+    ARMOUR_GUARD = 0;
+    //     =IF(OR(Z16 = "None", Z16 = ""),0,IF(
+    //     Z16 = "Light [+1 Armor | Fort 0]",1,IF(
+    //     Z16 = "Medium [+2 Armor | Fort 2]",2,IF(
+    //     Z16 = "Heavy [+3 Armor | Fort 3]",3))))
+    SHIELD_GUARD = 0;
+    //     =IF(OR(Z15 = "None", Z15=""),0,IF(
+    //     Z15 = "Shield [Defensive 1 | Forceful]",1,IF(
+    //     Z15 = "Large Shield [Defensive 2 | Forceful]",1,"")))
+    ATTRIBUTE_GUARD = 0;
+    //     =$E$6+$E$8
+    ATTRIBUTE_TOUGHNESS = 0;
+    //     =$E$7+$E$13
+    ATTRIBUTE_RESOLVE = 0;
+    //     =$E$13+$E$17
+    OTHER_GUARD = 0;
+    OTHER_TOUGHNESS = 0;
+    OTHER_RESOLVE = 0;
+
+    guard = () =>
+        this.fatigue >= 4
+            ? this.ARMOUR_GUARD + this.SHIELD_GUARD + 10 + this.OTHER_GUARD
+            : this.ARMOUR_GUARD + this.SHIELD_GUARD + this.ATTRIBUTE_GUARD + 10;
+    toughness = () =>
+        this.fatigue >= 4
+            ? 10 + this.OTHER_TOUGHNESS
+            : this.ATTRIBUTE_TOUGHNESS + 10;
+    resolve = () =>
+        this.fatigue >= 4
+            ? 10 + this.OTHER_RESOLVE
+            : this.ATTRIBUTE_RESOLVE + 10;
 }
 
 export class Attribute {
@@ -120,7 +125,6 @@ export class Attribute {
         );
     }
 
-
     updateScore(score: number) {
         this.score = score;
         if (this.score < 0) this.score = 0;
@@ -133,3 +137,48 @@ export class Attribute {
         }, Cost: ${this.cost()}, Dice: ${this.dice()}, Passives: ${this.passives()}]`;
     }
 }
+
+export class Proficiencies {}
+
+export class Feats {}
+
+const defaultAttributes = [
+    {
+        name: "Physical",
+        attributes: [
+            new Attribute("Agility"),
+            new Attribute("Fortitude"),
+            new Attribute("Might"),
+        ],
+    },
+    {
+        name: "Mental",
+        attributes: [
+            new Attribute("Learning"),
+            new Attribute("Logic"),
+            new Attribute("Perception"),
+            new Attribute("Will"),
+        ],
+    },
+    {
+        name: "Social",
+        attributes: [
+            new Attribute("Deception"),
+            new Attribute("Persuasion"),
+            new Attribute("Presence"),
+        ],
+    },
+    {
+        name: "Extraodinary",
+        attributes: [
+            new Attribute("Alteration"),
+            new Attribute("Creation"),
+            new Attribute("Energy"),
+            new Attribute("Entropy"),
+            new Attribute("Influence"),
+            new Attribute("Movement"),
+            new Attribute("Prescience"),
+            new Attribute("Protection"),
+        ],
+    },
+];
