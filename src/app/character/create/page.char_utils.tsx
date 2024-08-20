@@ -7,6 +7,8 @@ import React from "react";
 export function Create() {
     // Test data because database support isn't there yet
     let char = new CharacterStats();
+    const [att_score, att_setScore] = useState("default");
+
     return (
         <div>
             <form>
@@ -21,15 +23,15 @@ export function Create() {
                 <br />
                 <br />
             </form>
-            <DisplayAttributeList character={char} />
+            <DisplayAttributeList character={char} callback={att_setScore}/>
+            <DisplayDefensiveStats character={char} />
         </div>
     );
 }
 
-export function DisplayAttribute({ attribute }: { attribute : Attribute}) {
+export function DisplayAttribute({ attribute, callback }: { attribute : Attribute, callback: Function}) {
     
     // Score state to re-render attribute data on update
-    const [score, setScore] = useState(0);
 
     // Rerender when changing score
     function handleUpdate(e: React.ChangeEvent<HTMLInputElement>) {
@@ -37,7 +39,7 @@ export function DisplayAttribute({ attribute }: { attribute : Attribute}) {
         // Check if the input is a number
         if (!Number.isNaN(parseInt(val))) {
             attribute.updateScore(parseInt(val));
-            setScore(attribute.score);
+            callback(attribute.name+attribute.score);
         }
     }
     
@@ -79,7 +81,7 @@ export function DisplayAttribute({ attribute }: { attribute : Attribute}) {
     );
 }
 
-export function DisplayAttributeList({ character }: {character: CharacterStats}) {
+export function DisplayAttributeList({ character, callback }: {character: CharacterStats, callback: Function}) {
     return (
         <>
             <div className="attributesGrid infoPane">
@@ -90,7 +92,7 @@ export function DisplayAttributeList({ character }: {character: CharacterStats})
                             <br />
                             {category.attributes.map((attr: any) => (
                                 <div key={attr.name}>
-                                    <DisplayAttribute attribute={attr} />
+                                    <DisplayAttribute attribute={attr} callback={callback} />
                                 </div>
                             ))}
                         </div>
@@ -99,4 +101,14 @@ export function DisplayAttributeList({ character }: {character: CharacterStats})
             </div>
         </>
     );
+}
+
+export function DisplayDefensiveStats ({character}: {character: CharacterStats}) {
+    return (
+        <>
+            {"Guard: " + character.guard()} <br/>
+            {"Toughness: " + character.toughness()} <br/>
+            {"Resolve: " + character.resolve()} <br/>
+        </>
+    )
 }

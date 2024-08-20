@@ -1,10 +1,29 @@
 import React from "react";
 import "./styles.css";
 
+interface attributesInterface {
+    attributes: [
+        { name: "Physical"; attributes: Attribute[] },
+        {
+            name: "Mental";
+            attributes: Attribute[];
+        },
+        {
+            name: "Social";
+            attributes: Attribute[];
+        },
+        {
+            name: "Extraodinary";
+            attributes: Attribute[];
+        }
+    ];
+}
+
 export class CharacterStats {
     constructor(
         xp: number = 0,
-        attributes: object = structuredClone(defaultAttributes),
+        // @ts-ignore
+        attributes: attributesInterface["attributes"] = defaultAttributes,
         fatigue: number = 0
     ) {
         // JSON PARSE/STRINGIFY to ensure not pointer
@@ -15,7 +34,7 @@ export class CharacterStats {
 
     fatigue: number;
     xp: number;
-    attributes: object;
+    attributes: attributesInterface["attributes"];
 
     level = () => {
         return this.xp < 3 ? 1 : Math.floor(this.xp / 3) + 1;
@@ -26,37 +45,65 @@ export class CharacterStats {
     };
 
     // ! TO IMPLEMENT (USE CHAR SHEET)
-    ARMOUR_GUARD = 0;
-    //     =IF(OR(Z16 = "None", Z16 = ""),0,IF(
-    //     Z16 = "Light [+1 Armor | Fort 0]",1,IF(
-    //     Z16 = "Medium [+2 Armor | Fort 2]",2,IF(
-    //     Z16 = "Heavy [+3 Armor | Fort 3]",3))))
-    SHIELD_GUARD = 0;
-    //     =IF(OR(Z15 = "None", Z15=""),0,IF(
-    //     Z15 = "Shield [Defensive 1 | Forceful]",1,IF(
-    //     Z15 = "Large Shield [Defensive 2 | Forceful]",1,"")))
-    ATTRIBUTE_GUARD = 0;
-    //     =$E$6+$E$8
-    ATTRIBUTE_TOUGHNESS = 0;
-    //     =$E$7+$E$13
-    ATTRIBUTE_RESOLVE = 0;
-    //     =$E$13+$E$17
+    ARMOUR_GUARD = () => 0;
+    //     =IF(OR(ARMOUR = "None", ARMOUR = ""),0,IF(
+    //     ARMOUR = "Light [+1 Armor | Fort 0]",1,IF(
+    //     ARMOUR = "Medium [+2 Armor | Fort 2]",2,IF(
+    //     ARMOUR = "Heavy [+3 Armor | Fort 3]",3))))
+    SHIELD_GUARD = () => 0;
+    //     =IF(OR(SHIELD = "None", SHIELD=""),0,IF(
+    //     SHIELD = "Shield [Defensive 1 | Forceful]",1,IF(
+    //     SHIELD = "Large Shield [Defensive 2 | Forceful]",1,"")))
+    ATTRIBUTE_GUARD = () => {
+        // AGILITY + MIGHT
+        return (
+            // @ts-ignore
+            this.attributes[0].attributes.find((a) => (a.name = "Agility"))
+                ?.score +
+            // @ts-ignore
+            this.attributes[0].attributes.find((a) => (a.name = "Might"))?.score
+        );
+    };
+    ATTRIBUTE_TOUGHNESS = () => {
+        // =FORTITUDE + WILL
+        return (
+            // @ts-ignore
+            this.attributes[0].attributes.find((a) => (a.name = "Fortitude"))
+                ?.score +
+            // @ts-ignore
+            this.attributes[0].attributes.find((a) => (a.name = "Will"))?.score
+        );
+    };
+    ATTRIBUTE_RESOLVE = () => {
+        // =WILL + PRESENCE
+        return (
+            // @ts-ignore
+            this.attributes[0].attributes.find((a) => (a.name = "Will"))
+                ?.score +
+            // @ts-ignore
+            this.attributes[0].attributes.find((a) => (a.name = "Presence"))
+                ?.score
+        );
+    };
     OTHER_GUARD = 0;
     OTHER_TOUGHNESS = 0;
     OTHER_RESOLVE = 0;
 
     guard = () =>
         this.fatigue >= 4
-            ? this.ARMOUR_GUARD + this.SHIELD_GUARD + 10 + this.OTHER_GUARD
-            : this.ARMOUR_GUARD + this.SHIELD_GUARD + this.ATTRIBUTE_GUARD + 10;
+            ? this.ARMOUR_GUARD() + this.SHIELD_GUARD() + 10 + this.OTHER_GUARD
+            : this.ARMOUR_GUARD() +
+              this.SHIELD_GUARD() +
+              this.ATTRIBUTE_GUARD() +
+              10;
     toughness = () =>
         this.fatigue >= 4
             ? 10 + this.OTHER_TOUGHNESS
-            : this.ATTRIBUTE_TOUGHNESS + 10;
+            : this.ATTRIBUTE_TOUGHNESS() + 10;
     resolve = () =>
         this.fatigue >= 4
             ? 10 + this.OTHER_RESOLVE
-            : this.ATTRIBUTE_RESOLVE + 10;
+            : this.ATTRIBUTE_RESOLVE() + 10;
 }
 
 export class Attribute {
