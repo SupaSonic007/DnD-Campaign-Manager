@@ -1,4 +1,3 @@
-import { PlayerList } from "./page.playerList";
 import "./styles.css";
 
 export default function Page() {
@@ -38,12 +37,8 @@ export default function Page() {
                 </form>
                 <br />
                 <br />
-                <div id="playerlist">
-                    <b>Players:</b>
-                    <br/>
-                    [Being Implemented]
-                    <PlayerList />
-                </div>
+                <b>[Players]</b>
+                <br/>
             </div>
         </main>
     );
