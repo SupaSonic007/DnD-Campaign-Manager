@@ -1,11 +1,12 @@
+"use server"
+
 import db, { schema } from "@/drizzy/drizzy";
-import { character } from "@/drizzy/schema";
 import { eq, like } from "drizzle-orm";
 
-export async function addChar(charName: string, charUrl: string) {
+export async function addChar(charName: string, charUrl: string, ownerID: string) {
     await db.insert(schema.character).values({
         name: charName,
-        owner: charUrl,
+        owner: ownerID,
         url: charUrl,
     });
 

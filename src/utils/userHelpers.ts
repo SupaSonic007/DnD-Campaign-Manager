@@ -1,3 +1,5 @@
+"use server"
+
 import db, { schema } from "@/drizzy/drizzy";
 import { eq, or, like } from "drizzle-orm";
 import sha256 from "./sha256";
