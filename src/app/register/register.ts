@@ -1,17 +1,19 @@
 "use server";
 
-import db, { schema } from "@/drizzy/drizzy";
-import { eq, or } from "drizzle-orm";
 import { addUserTokenToCookie } from "@/utils/jwt";
 import { redirect } from "next/navigation";
-import { checkUserExists, addUser, getAllUsers, getUserByEmail } from "../../utils/userHelpers"
+import {
+    checkUserExists,
+    addUser,
+    getUserByEmail,
+} from "../../utils/userHelpers";
 
 export async function register(prevData: any, data: FormData) {
     const email = data.get("email") as string;
     const username = data.get("username") as string;
     const password = data.get("password") as string;
 
-    const [emailTaken, usernameTaken] = await checkUserExists(email, username)
+    const [emailTaken, usernameTaken] = await checkUserExists(email, username);
 
     if (emailTaken || usernameTaken) {
         return {
@@ -21,12 +23,12 @@ export async function register(prevData: any, data: FormData) {
         };
     }
 
-    await addUser(email, username, password)
+    await addUser(email, username, password);
 
-    const user = await getUserByEmail(email)
+    const user = await getUserByEmail(email);
     console.log(user);
 
-    await addUserTokenToCookie( user );
+    await addUserTokenToCookie(user);
 
-    redirect('/')
+    redirect("/");
 }
