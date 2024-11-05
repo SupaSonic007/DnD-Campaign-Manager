@@ -1,6 +1,6 @@
 "use client"
-import { addChar } from "@/utils/charHelpers";
-import { getCurrentUser } from "@/utils/jwt";
+import { addChar } from "@/utils/helpers/charHelpers";
+import { getCurrentUser } from "@/utils/helpers/jwt";
 import { useFormState } from "react-dom";
 
 export default function Page () {

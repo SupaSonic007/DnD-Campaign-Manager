@@ -1,7 +1,7 @@
 import db, { schema } from "@/drizzy/drizzy";
 import { eq } from "drizzle-orm";
 import ClientPage from "./page.client";
-import { getUser } from "../../../utils/userHelpers";
+import { getUser } from "../../../utils/helpers/userHelpers";
 
 export default async function Page({ params }: { params: { id: string } }) {
     const user = await getUser(params.id);

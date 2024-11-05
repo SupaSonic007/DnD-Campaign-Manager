@@ -1,12 +1,12 @@
 "use server";
 
-import { addUserTokenToCookie } from "@/utils/jwt";
+import { addUserTokenToCookie } from "@/utils/helpers/jwt";
 import { redirect } from "next/navigation";
 import {
     checkUserExists,
     addUser,
     getUserByEmail,
-} from "../../utils/userHelpers";
+} from "../../utils/helpers/userHelpers";
 
 export async function register(prevData: any, data: FormData) {
     const email = data.get("email") as string;

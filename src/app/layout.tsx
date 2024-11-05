@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { getCurrentUser } from "@/utils/jwt";
+import { getCurrentUser } from "@/utils/helpers/jwt";
 import "./globals.css";
 import db, { schema } from "@/drizzy/drizzy";
 import { eq } from "drizzle-orm";
