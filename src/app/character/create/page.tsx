@@ -1,10 +1,9 @@
 "use client"
-import { addChar } from "@/utils/helpers/charHelpers";
-import { getCurrentUser } from "@/utils/helpers/jwt";
 import { useFormState } from "react-dom";
+import addCharFromForm from "./addChar";
 
 export default function Page () {
-    const [state, action] = useFormState(addCharFromForm, undefined);
+    const [_, action] = useFormState(addCharFromForm, undefined);
     return (
         <main>
             <form action={action}>
@@ -22,14 +21,4 @@ export default function Page () {
             </form>
         </main>
     )
-}
-
-async function addCharFromForm (prevData: any, data: FormData) {
-    const name = data.get("name") as string
-    const url = data.get("url") as string
-    let currentUser;
-    // const currentUser = await getCurrentUser()
-
-    // if (currentUser) await addChar(name, currentUser, url)
-    // else {console.error("Must be logged in to use this feature")}
 }

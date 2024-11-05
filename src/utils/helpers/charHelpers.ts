@@ -3,7 +3,7 @@
 import db, { schema } from "@/drizzy/drizzy";
 import { eq, like } from "drizzle-orm";
 
-export async function addChar(charName: string, charUrl: string, ownerID: string) {
+export async function addChar(ownerID: string, charName: string, charUrl: string) {
     await db.insert(schema.character).values({
         name: charName,
         owner: ownerID,
