@@ -12,9 +12,9 @@ export default async function addCharFromForm (prevData: any, data: FormData) {
     console.log(name)
     console.log(url)
     console.log(currentUser)
-    if (!name || !url) console.error("Must provide character name and url")
-    if (currentUser) await addChar(currentUser, name, url)
-    else {console.error("Must be logged in to use this feature")}
+    if (!name || !url) return {message:"Must provide character name and url"}
+    if (!currentUser) return {message:"Must be logged in to use this feature"}
+    await addChar(currentUser, name, url)
 
     return
 }

@@ -3,9 +3,10 @@ import { useFormState } from "react-dom";
 import addCharFromForm from "./addChar";
 
 export default function Page () {
-    const [_, action] = useFormState(addCharFromForm, undefined);
+    const [state, action] = useFormState(addCharFromForm, undefined);
     return (
         <main>
+            <span style={{ color: "red", fontWeight: "bold" }}>{state?.message}</span>
             <form action={action}>
                 <label htmlFor="name">Character name:</label>
                 <br/>
