@@ -1,9 +1,9 @@
 "use server";
 
 import db, { schema } from "@/drizzy/drizzy";
-import sha256 from "@/utils/sha256";
+import sha256 from "@/utils/helpers/sha256";
 import { and, eq } from "drizzle-orm";
-import { addUserTokenToCookie } from "@/utils/jwt";
+import { addUserTokenToCookie } from "@/utils/helpers/jwt";
 import { redirect } from "next/navigation";
 
 export async function auth(prevData: any, data: FormData) {
