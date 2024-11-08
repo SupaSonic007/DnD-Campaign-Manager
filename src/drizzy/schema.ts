@@ -1,15 +1,8 @@
-import { relations, sql } from "drizzle-orm";
-import { bigint } from "drizzle-orm/mysql-core";
 import { createId } from "@paralleldrive/cuid2";
 import {
     pgTable,
     text,
     timestamp,
-    numeric,
-    json,
-    boolean,
-    integer,
-    serial,
 } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {

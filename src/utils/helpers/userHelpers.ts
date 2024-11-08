@@ -1,14 +1,16 @@
-"use server"
+"use server";
 
 import db, { schema } from "@/drizzy/drizzy";
-import { eq, or, like } from "drizzle-orm";
+import { eq, or, ilike } from "drizzle-orm";
 import sha256 from "./sha256";
 
 export async function searchLikeUsers(input: string) {
+    if (input == "") return [];
+
     var users: { name: string; id: string }[] = await db
         .select({ id: schema.user.id, name: schema.user.username })
         .from(schema.user)
-        .where(like(schema.user.username, `${input}%`));
+        .where(ilike(schema.user.username, `${input}%`));
 
     return users;
 }
