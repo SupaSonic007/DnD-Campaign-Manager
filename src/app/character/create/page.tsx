@@ -1,6 +1,6 @@
 "use client"
 import { useFormState } from "react-dom";
-import addCharFromForm from "./addChar";
+import addCharFromForm from "../../../utils/helpers/addChar";
 
 export default function Page () {
     const [state, action] = useFormState(addCharFromForm, undefined);

@@ -27,6 +27,7 @@ export default async function RootLayout({
             .from(schema.user)
             .where(eq(schema.user.id, userID)))[0];
     }
+
     return (
         <html lang="en">
             <body className={inter.className}>
@@ -37,9 +38,15 @@ export default async function RootLayout({
                             <Link href="/" className="navitem">
                                 <li>Home</li>
                             </Link>
+                            { user ? 
+                            <Link href="/character" className="navitem">
+                                <li>Character</li>
+                            </Link> : 
+                            null }
                             <Link href="/about" className="navitem">
-                                <li>About Us</li>
-                            </Link>
+                                <li>About</li>
+                            </Link> 
+                            
                             {/* <Link href="/test" className="navitem">
                                 <li>test</li>
                             </Link> */}

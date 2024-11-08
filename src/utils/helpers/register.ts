@@ -6,7 +6,7 @@ import {
     checkUserExists,
     addUser,
     getUserByEmail,
-} from "../../utils/helpers/userHelpers";
+} from "./userHelpers";
 
 export async function register(prevData: any, data: FormData) {
     const email = data.get("email") as string;

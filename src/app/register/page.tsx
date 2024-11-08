@@ -1,6 +1,6 @@
 "use client";
 
-import { register } from "./register";
+import { register } from "../../utils/helpers/register";
 import { useFormState } from "react-dom";
 
 export default function Page() {

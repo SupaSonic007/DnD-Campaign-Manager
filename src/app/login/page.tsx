@@ -1,6 +1,6 @@
 "use client";
 
-import { auth } from "./login";
+import { auth } from "../../utils/helpers/login";
 import { useFormState } from "react-dom";
 
 export default function Page() {

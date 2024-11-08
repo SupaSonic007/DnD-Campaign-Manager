@@ -44,3 +44,9 @@ export async function getCurrentUser() {
         return null;
     }
 }
+
+export async function removeUserToken() {
+    const token = cookies().get("token");
+    if (!token) return null;
+    cookies().delete("token")
+}
